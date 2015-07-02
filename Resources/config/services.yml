@@ -1,0 +1,41 @@
+parameters:
+    router.class: HDIV\SecurityBundle\Routing\Router
+
+services:
+
+    hdiv_security_bundle.hdiv_data_composer_memory:
+        class: HDIV\SecurityBundle\HDIVCore\DataComposer\DataComposerMemory
+        arguments:
+            - @session
+            - @hdiv_security_bundle.hdiv_config
+
+
+    hdiv_security_bundle.hdiv_data_validator:
+        class: HDIV\SecurityBundle\HDIVCore\DataValidator\DataValidator
+        arguments:
+            - @session
+            - @logger
+
+    hdiv_security_bundle.hdiv_config:
+        class: HDIV\SecurityBundle\HDIVCore\HDIVConfig
+        arguments:
+            - [%kernel.root_dir%]
+
+    hdiv_security_bundle.hdiv_type_extension:
+        class: HDIV\SecurityBundle\Form\Extension\HDIVTypeExtension
+        arguments:
+            - @hdiv_security_bundle.hdiv_data_composer_memory
+            - @hdiv_security_bundle.hdiv_config
+            - @logger
+        tags:
+            - { name: form.type_extension, alias: form }
+
+    hdiv_security_bundle.hdiv_token_listener:
+        class: HDIV\SecurityBundle\EventListener\HDIVListener
+        arguments:
+            - @hdiv_security_bundle.hdiv_data_validator
+            - @hdiv_security_bundle.hdiv_data_composer_memory
+            - @hdiv_security_bundle.hdiv_config
+            - @router
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest}

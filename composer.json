@@ -1,0 +1,22 @@
+{
+    "name": "hdiv/securitybundle",
+    "type": "hdiv-bundle",
+    "description": "HDIV bundle",
+    "keywords": ["symfony2", "hdiv", "code", "security"],
+    "homepage": "http://www.hdiv.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HDIV",
+            "email": "support@hdiv.org",
+            "homepage": "http://www.hdiv.org/"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "HDIV\\SecurityBundle": ""
+        }
+    },
+    "target-dir": "HDIV/SecurityBundle"
+
+}

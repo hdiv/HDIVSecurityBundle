@@ -1,0 +1,3 @@
+hdivsecurity_homepage:
+    pattern:  /unauthorized
+    defaults: { _controller: HDIVSecurityBundle:Unauthorized:index }

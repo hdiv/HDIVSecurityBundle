@@ -9,7 +9,7 @@
         {
             "name": "HDIV",
             "email": "support@hdiv.org",
-            "homepage": "http://www.hdiv.org/"
+            "homepage": "https://github.com/hdiv/HDIVSecurityBundle"
         }
     ],
     "autoload": {

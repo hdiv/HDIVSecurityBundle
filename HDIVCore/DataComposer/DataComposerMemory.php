@@ -126,8 +126,8 @@ class DataComposerMemory
     public function saveChildrenToState($children, State $newState, $parentName)
     {
         foreach ($children as $ch) {
-            $namee = $ch->getName();
-            $name = $parentName.'['.$namee.']';
+            $childrenName = $ch->getName();
+            $name = $parentName.'['.$childrenName.']';
             $type = $ch->getConfig()->getType()->getName();
 
             if ($ch->all() && $type!='choice') {

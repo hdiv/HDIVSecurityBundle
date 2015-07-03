@@ -56,12 +56,10 @@ class HDIVTypeExtension extends AbstractTypeExtension
                 //Checks text and password fields inputs
                 $builder->addEventListener(FormEvents::POST_SUBMIT, function ($event) {
 
+                    $​typeNames = array('text', 'textarea', 'search', 'email', 'password');
+
                     foreach($event->getForm() as $key => $field) {
-                        if ($field->getConfig()->getType()->getName()=='text' ||
-                            $field->getConfig()->getType()->getName()=='textarea' ||
-                            $field->getConfig()->getType()->getName()=='search' ||
-                            $field->getConfig()->getType()->getName()=='email' ||
-                            $field->getConfig()->getType()->getName()=='password') {
+                        if (in_array($field->getConfig()->getType()->getName(), $​typeNames)) {
 
                             if (HDIVTypeExtension::isXSSorSQLInjection($field->getData())) {
                                 $field->addError(new FormError('HDIV Validation. Invalid Characters.'));
@@ -272,8 +270,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
         if ($options['compound']) {
 
             //Store all form fields and set the _HDIV_STATE_ value to the hidden field.
-            $action = $form->getConfig()->getAction();
-            $action = $this->removeParam($action, '_HDIV_STATE_');
+            $action = $this->removeParam($form->getConfig()->getAction(), '_HDIV_STATE_');
             $view->vars['action'] = $action;
             $token = $this->dataComposerMemory->addFormToCurrentPage($form, $action);
 

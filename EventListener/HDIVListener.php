@@ -88,8 +88,8 @@ class HDIVListener
             if (count($array) == 1) {
 
                 $formName = array_shift($array);
-                $arrayOtro = $request->request->get($formName);
-                $HDIVToken = $arrayOtro['_HDIV_STATE_'];
+                $values = $request->request->get($formName);
+                $HDIVToken = $values['_HDIV_STATE_'];
                 $list = $request->request->all();
                 $formParameters = array_shift($list);
 
@@ -100,7 +100,6 @@ class HDIVListener
                 } else { //It's a GET FORM.
 
                     $param = $request->query->get($formName);
-                    $HDIVToken = $param['_HDIV_STATE_'];
 
                     return $this->dataValidator->validateForm($formName, $param, $HDIVToken);
 

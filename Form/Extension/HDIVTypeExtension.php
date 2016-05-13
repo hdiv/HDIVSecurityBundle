@@ -24,6 +24,12 @@ use HDIV\SecurityBundle\HDIVCore\DataComposer\DataComposerMemory;
  */
 class HDIVTypeExtension extends AbstractTypeExtension
 {
+    /** User's whitelist rules. Disabled by default.
+    *
+    * Example: "/[^a-z_\-0-9]/i" : only alphanumerics, _ and -
+    */
+    
+    //static $userWhiteListRules = array("/[^a-z_\-0-9]/i");
 
     protected $dataComposerMemory;
     protected $HDIVConfig;
@@ -38,6 +44,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
 
      public function buildForm(FormBuilderInterface $builder, array $options)
      {
+
         if ($options['compound']) {
 
             //Creates _HDIV_STATE_ hidden field to the form
@@ -52,19 +59,53 @@ class HDIVTypeExtension extends AbstractTypeExtension
                 }
             });
 
+            // Rules validation
             if ($this->HDIVConfig->isEditableValidationEnabled()) {
-                //Checks text and password fields inputs
+
+                //Checks text, textarea, search, email and password fields inputs
                 $builder->addEventListener(FormEvents::POST_SUBMIT, function ($event) {
 
                     $​typeNames = array('text', 'textarea', 'search', 'email', 'password');
 
+                    // For each parameter
                     foreach($event->getForm() as $key => $field) {
                         if (in_array($field->getConfig()->getType()->getName(), $​typeNames)) {
 
-                            if (HDIVTypeExtension::isXSSorSQLInjection($field->getData())) {
-                                $field->addError(new FormError('HDIV Validation. Invalid Characters.'));
-                              //  $this->logger->info('HDIV: Editable value error.');
+                            // The field has no value
+                            if (!$field->getData()) {
+                                return;
                             }
+
+                            $isValid = true;
+
+                            // Apply whitelist rules, if an user has set up them
+                            if (isset(HDIVTypeExtension::$userWhiteListRules) && (HDIVTypeExtension::$userWhiteListRules)){
+
+                                foreach (HDIVTypeExtension::$userWhiteListRules as $valor) {
+
+                                    if (preg_match($valor, $field->getData())) {
+                                        $field->addError(new FormError('HDIV Validation. WhiteList rules. Invalid Characters.'));
+                                        $isValid = false;
+                                        return;
+                                    } else {
+                                        $isValid = true;
+                                    }
+                                }
+
+                            }
+
+                            // Apply blacklist rules
+                            if ($isValid) {
+                                $isXSSorSQLInjection = HDIVTypeExtension::isXSSorSQLInjection($field->getData());
+                                if ($isXSSorSQLInjection == 1) {
+                                    $field->addError(new FormError('HDIV Validation. BlackList rules. SQL Injection. Invalid Characters.'));
+                                    //$this->logger->info('HDIV: Editable value error.');
+                                }
+                                if ($isXSSorSQLInjection == 2) {
+                                    $field->addError(new FormError('HDIV Validation. BlackList rules. XSS Attack. Invalid Characters.'));
+                                  //  $this->logger->info('HDIV: Editable value error.');
+                                }                                
+                            } 
                         }
                     }
                 });
@@ -75,7 +116,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
     /**
      * Checks if <code>$in</code> is a non malicious string with ModSecurity rules
      * @param $in
-     * @return bool
+     * @return 0 if there is no attack / 1 if Sql Injection / 2 if XSS 
      */
     public static function isXSSorSQLInjection($in){
 
@@ -128,7 +169,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
         }
 
         if ($isSqlInjection) {
-            return true;
+            return 1;
         }
 
         $isXSS = false;
@@ -257,11 +298,11 @@ class HDIVTypeExtension extends AbstractTypeExtension
         }
 
         if ($isXSS) {
-            return true;
+            return 2;
         }
 
 
-        return false;
+        return 0;
     }
 
 

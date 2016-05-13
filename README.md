@@ -1,4 +1,4 @@
-<img src="http://www.hdiv.org/img/cip-logo.jpg" alt="CIP-logo" title="CIP-logo" align="right" />
+<img src="http://www.hdivsecurity.com/img/cip-logo.jpg" alt="CIP-logo" title="CIP-logo" align="right" />
 
 This work has been developed in the context of the SWEPT project partially funded by the European Community's Competitiveness and Innovation Framework Programme (CIP/2007-2013 http://ec.europa.eu/cip/) under grant agreement n° 621056
 <br/><br/><br/><br/><br/>

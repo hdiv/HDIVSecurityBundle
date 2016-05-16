@@ -97,9 +97,7 @@ hdiv:
            -->
         <startPage>/hdiv-symfony-showcase/web/app_dev.php/</startPage>
         <startPage>/hdiv-symfony-showcase/web/</startPage>
-        <startPage>/hdiv-symfony-showcase/web/app_dev.php/login</startPage>
-        <startPage>/hdiv-symfony-showcase/web/login</startPage>
-
+        
         <!--
           Don't change if you are using wdt and profiler default paths
            -->
@@ -135,7 +133,11 @@ hdiv:
     -->
 
     <!--
-    The user can set extra whitelist or blacklist validation rules to the application
+    In addition to the default validations it is possible to create your own custom validations. To do this, first it is necessary to create a validation entity,
+    which could contain two kinds of patterns:
+
+        AcceptedPattern: the parameter value must match the pattern (whitelist), otherwise Hdiv generates an error message that is visible within the original form.
+        RejectedPattern: if the parameter value matches the defined pattern (blacklist), Hdiv generates an error that is visible within the original form.
     -->
     <validations>
         <validation name="extraSafe">
@@ -143,9 +145,18 @@ hdiv:
         </validation>
     </validations>
 
+    <!--
+    Once validation has been defined, it is necessary to make an additional step to activate it. To do this, add a validation rule to the editableValidations entity.
+    The validation rule is applied to a specific POST/action url pattern. We see here an example to apply the validation as defined above:
+    -->
     <editableValidations enabled="true">
+        <!-- dev urls -->
         <validationRule url="/hdiv-symfony-showcase/web/app_dev.php/.*" enableDefaultBlackListRules="true"></validationRule>
-        <validationRule url="/hdiv-symfony-showcase/web/app_dev.php/order/new/" enableDefaultBlackListRules="false">extraSafe</validationRule>
+        <validationRule url="/hdiv-symfony-showcase/web/app_dev.php/dashboard/" enableDefaultBlackListRules="false">extraSafe</validationRule>
+
+        <!-- prod urls -->
+        <validationRule url="/hdiv-symfony-showcase/web/.*" enableDefaultBlackListRules="true"></validationRule>
+        <validationRule url="/hdiv-symfony-showcase/web/dashboard/" enableDefaultBlackListRules="false">extraSafe</validationRule>
     </editableValidations>
 
 </hdiv-config>

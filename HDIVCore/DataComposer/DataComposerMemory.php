@@ -107,6 +107,8 @@ class DataComposerMemory
         $newState = new State($numPage, $actPage->getSize() + 1, $actPage->getRandomToken());
         $newState->setUrl($newAction);
 
+        $this->session->set('actualUrl', $newAction);
+
         $this->saveChildrenToState($form->all(), $newState, $form->getName());
 
         $actPage->addState($newState);
@@ -145,4 +147,5 @@ class DataComposerMemory
             }
         }
     }
+
 }

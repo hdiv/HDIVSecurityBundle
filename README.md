@@ -110,12 +110,6 @@ hdiv:
 
     <maxPagesPerSession>3</maxPagesPerSession>
 
-    <!--
-    HDIV offers a generic validation functionality that makes possible the application of validation
-     rules to all editable data (information that comes from web forms fields such as text and password) sent by the client.
-        -->
-    <editableValidation>True</editableValidation>
-
     <debugMode>False</debugMode>
 
     <excludedExtensions>
@@ -133,6 +127,26 @@ hdiv:
         <excludedPage>/hdiv-symfony-showcase/web/app_dev.php/_profiler/.*</excludedPage>
         <excludedPage>/hdiv-symfony-showcase/web/app_dev.php/_wdt/.*</excludedPage>
     </excludedPages>
+
+    <!--
+    Editable validations
+    HDIV offers a generic validation functionality that makes possible the application of validation
+    rules to all editable data (information that comes from web forms fields such as text and password) sent by the client.
+    -->
+
+    <!--
+    The user can set extra whitelist or blacklist validation rules to the application
+    -->
+    <validations>
+        <validation name="extraSafe">
+            <acceptedPattern><![CDATA[/^[a-z0-9 .\-]+$/i]]></acceptedPattern>
+        </validation>
+    </validations>
+
+    <editableValidations enabled="true">
+        <validationRule url="/hdiv-symfony-showcase/web/app_dev.php/.*" enableDefaultBlackListRules="true"></validationRule>
+        <validationRule url="/hdiv-symfony-showcase/web/app_dev.php/order/new/" enableDefaultBlackListRules="false">extraSafe</validationRule>
+    </editableValidations>
 
 </hdiv-config>
 

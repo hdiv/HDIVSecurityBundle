@@ -145,11 +145,6 @@ class HDIVConfig
 	 */
 	public function transformPattern($pattern) {
 
-		if ($this->endsWith($pattern, "/")) {
-			$pattern = $pattern.'$';
-		}
-		
-		$pattern = '@'.$pattern.'@';
 		return $pattern;
 	}
 

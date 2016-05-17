@@ -95,14 +95,14 @@ hdiv:
         <!--
          Your entrance to your application
            -->
-        <startPage>@^/hdiv-symfony-showcase/web/app_dev.php/$@</startPage>
+        <startPage>@^/hdiv-symfony-showcase/web/app_dev\.php/$@</startPage>
         <startPage>@^/hdiv-symfony-showcase/web/$@</startPage>
         
         <!--
           Don't change if you are using wdt and profiler default paths
            -->
-        <startPage>@^/hdiv-symfony-showcase/web/app_dev.php/_profiler/@</startPage>
-        <startPage>@^/hdiv-symfony-showcase/web/app_dev.php/_wdt/@</startPage>
+        <startPage>@^/hdiv-symfony-showcase/web/app_dev\.php/_profiler/@</startPage>
+        <startPage>@^/hdiv-symfony-showcase/web/app_dev\.php/_wdt/@</startPage>
 
     </startPages>
 
@@ -122,8 +122,8 @@ hdiv:
       Don't change if you are using wdt and profiler default paths
        -->
     <excludedPages>
-        <excludedPage>@^/hdiv-symfony-showcase/web/app_dev.php/_profiler/@</excludedPage>
-        <excludedPage>@^/hdiv-symfony-showcase/web/app_dev.php/_wdt/@</excludedPage>
+        <excludedPage>@^/hdiv-symfony-showcase/web/app_dev\.php/_profiler/@</excludedPage>
+        <excludedPage>@^/hdiv-symfony-showcase/web/app_dev\.php/_wdt/@</excludedPage>
     </excludedPages>
 
     <!--
@@ -151,8 +151,8 @@ hdiv:
     -->
     <editableValidations enabled="true">
         <!-- dev urls -->
-        <validationRule url="@^/hdiv-symfony-showcase/web/app_dev.php/@" enableDefaultBlackListRules="true"></validationRule>
-        <validationRule url="@^/hdiv-symfony-showcase/web/app_dev.php/dashboard/$@" enableDefaultBlackListRules="false">extraSafe</validationRule>
+        <validationRule url="@^/hdiv-symfony-showcase/web/app_dev\.php/@" enableDefaultBlackListRules="true"></validationRule>
+        <validationRule url="@^/hdiv-symfony-showcase/web/app_dev\.php/dashboard/$@" enableDefaultBlackListRules="false">extraSafe</validationRule>
 
         <!-- prod urls -->
         <validationRule url="@^/hdiv-symfony-showcase/web/@" enableDefaultBlackListRules="true"></validationRule>

@@ -59,9 +59,19 @@ class HDIVTypeExtension extends AbstractTypeExtension
             // Rules validation
             if ($this->HDIVConfig->isEditableValidationEnabled() == "true") {
 
-                //Checks text, textarea, search, email and password fields inputs
-                $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+                    $logger = $this->logger;
 
+                    //Checks text, textarea, search, email and password fields inputs
+                    $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($logger) {
+        
+                    // Gets Symfony's form errors
+                    $errors =  $this->getErrorMessages($event->getForm());
+        
+                    // Log Errors
+                    foreach($errors as $key => $value) {
+                        $logger->error('Hdiv Logger. Form validation | Field Name: '. $key.' | Field Type: '.$value.' | IP: '.$_SERVER['REMOTE_ADDR']);
+        
+                    }
 
                     //Get actionForm
                     $formAction = $this->removeParam($event->getForm()->getConfig()->getAction(), '_HDIV_STATE_');
@@ -88,7 +98,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
                             }
 
                             $rules = $this->HDIVConfig->getEditableValidations()[$editableValidationMatchedKey];
-                            $this->checkRulesField($rules, $field);
+                            $this->checkRulesField($rules, $field, $logger);
                         }
                     }
                 });
@@ -115,12 +125,44 @@ class HDIVTypeExtension extends AbstractTypeExtension
     }
 
     /**
+     * Get errorMessages
+     *
+     * @param $form
+     * @param $errors array
+     */
+    private function getErrorMessages(\Symfony\Component\Form\Form $form)
+    {
+        $errors = array();
+
+        if ($form->count() > 0) {
+            foreach ($form->all() as $child) {
+                /**
+                 * @var \Symfony\Component\Form\Form $child
+                 */
+                if (!$child->isValid()) {
+
+                    $errors[$child->getName()] = $child->getConfig()->getType()->getName();
+                }
+            }
+        } else {
+            /**
+             * @var \Symfony\Component\Form\FormError $error
+             */
+            foreach ($form->getErrors() as $key => $error) {
+                $errors[] = $error->getMessage();
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
      * Checks if a rule match with the field value
      *
      * @param $rules
      * @param $field
      */
-    private function checkRulesField($rules, $field) {
+    private function checkRulesField($rules, $field, $logger) {
         foreach ($rules as $nameRule => $rule){
 
             $acceptedPattern = $rule->getAcceptedPattern();
@@ -129,6 +171,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
                 if (!preg_match($acceptedPattern, $field->getData())) {
 
                     $field->addError(new FormError('HDIV Validation.'.$rule->getName().'. Invalid Characters.'));
+                    $logger->error('Hdiv Logger. Editable validation: '.$rule->getName().' | Field Name: '.$field->getName().' | Field Value: '.$field->getData().' | IP: '.$_SERVER['REMOTE_ADDR']);                    
                     return;
                 }
             }
@@ -138,6 +181,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
                 if (preg_match($rejectedPattern, $field->getData())) {
 
                     $field->addError(new FormError('HDIV Validation.'.$rule->getName().'. Invalid Characters.'));
+                    $logger->error('Hdiv Logger. Editable validation: '.$rule->getName().' | Field Name: '.$field->getName().' | Field Value: '.$field->getData().' | IP: '.$_SERVER['REMOTE_ADDR']);                    
                     return;
                 }
             }

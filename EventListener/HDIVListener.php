@@ -27,15 +27,16 @@ class HDIVListener
     private $dataComposerMemory;
     private $HDIVConfig;
     private $router;
-
+    private $logger;
 
     public function __construct(DataValidator $dataValidator,
-        DataComposerMemory $dataComposerMemory, HDIVConfig $HDIVConfig, $router)
+        DataComposerMemory $dataComposerMemory, HDIVConfig $HDIVConfig, $router, $logger)
     {
         $this->dataValidator = $dataValidator;
         $this->dataComposerMemory = $dataComposerMemory;
         $this->HDIVConfig = $HDIVConfig;
         $this->router = $router;
+        $this->logger = $logger;
     }
 
 
@@ -43,6 +44,10 @@ class HDIVListener
     {
         $request = $event->getRequest();
         $uri = str_replace('http://'.$_SERVER['HTTP_HOST'],'', $request->getRequestUri());
+
+        if ($this->HDIVConfig->isExcludedPage($uri)) {
+            return;
+        }
 
         if ($this->HDIVConfig->hasExcludedExtension($uri)) {
             return;
@@ -61,9 +66,8 @@ class HDIVListener
             $event->setResponse(new RedirectResponse($this->router->generate('hdivsecurity_homepage')));
         }
 
-        if (!$this->HDIVConfig->isExcludedPage($uri)) {
-            $this->dataComposerMemory->addNewPage();
-        }
+        $this->dataComposerMemory->addNewPage();
+
     }
 
     /**
@@ -107,6 +111,7 @@ class HDIVListener
 
             } else {
 
+                $this->logger->error('Hdiv Logger. Url validation | Requested URL: '. $transformedUri.' | IP: '.$_SERVER['REMOTE_ADDR']);
                 return false;
             }
         }

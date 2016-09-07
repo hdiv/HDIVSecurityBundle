@@ -38,5 +38,6 @@ services:
             - @hdiv_security_bundle.hdiv_data_composer_memory
             - @hdiv_security_bundle.hdiv_config
             - @router
+            - @logger
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest}

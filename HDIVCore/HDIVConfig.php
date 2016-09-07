@@ -84,6 +84,10 @@ class HDIVConfig
 			$this->editableValidations[$urlPattern] = $validationsArray;
 		}
 
+		//Order editable validations
+		$keys = array_map('strlen', array_keys($this->editableValidations));
+		array_multisort($keys, SORT_DESC, $this->editableValidations);
+
 		//Gets from XML startPages
 		$startPagesArray = array();
 		foreach($xml->startPages->startPage as $child) {
@@ -264,10 +268,6 @@ class HDIVConfig
 	 */
 	public function getEditableValidations()
 	{
-		//Order editable validations
-		$keys = array_map('strlen', array_keys($this->editableValidations));
-		array_multisort($keys, SORT_DESC, $this->editableValidations);
-
 		return $this->editableValidations;
 	}
 

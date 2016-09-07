@@ -65,7 +65,7 @@ class DataValidator
 		}
 
         if (!$validation) {
-            $this->logger->info('HDIV: ValidateUrl error. Requested URL: '. $uri);
+            $this->logger->error('Hdiv Logger. Url validation | Requested URL: '. $uri.' | IP: '.$_SERVER['REMOTE_ADDR']);
         }
 
 		return $validation;
@@ -101,7 +101,7 @@ class DataValidator
 
                         if ($valorUrl!=$_SERVER['REQUEST_URI']) {
 
-                            $this->logger->info('HDIV: ValidateForm error.');
+                            $this->logger->error('Hdiv Logger. Form validation | IP: '.$_SERVER['REMOTE_ADDR']);
 
                             return False;
                         }
@@ -112,7 +112,7 @@ class DataValidator
                         $validation = $this->compareSessionParametersWithActualParameters($sessionParameters, $this->actualParameters);
 
                         if (!$validation) {
-                            $this->logger->info('HDIV: ValidateForm error.');
+                            $this->logger->error('Hdiv Logger. Form validation | IP: '.$_SERVER['REMOTE_ADDR']);
                         }
 
                         return $validation;
@@ -121,7 +121,7 @@ class DataValidator
             }
         }
 
-        $this->logger->info('HDIV: ValidateForm error.');
+        $this->logger->error('Hdiv Logger. Form validation | IP: '.$_SERVER['REMOTE_ADDR']);
         return False;
 
     }

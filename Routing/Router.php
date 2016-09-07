@@ -35,7 +35,7 @@ class Router extends BaseRouter
         $url = parent::generate($name, $parameters, $referenceType);
         $url = str_replace('http://'.$_SERVER['HTTP_HOST'],'',$url);
 
-        if (!$this->HDIVConfig->isStartPage($url) && !$this->HDIVConfig->hasExcludedExtension($url)) {
+        if (!$this->HDIVConfig->isStartPage($url) && !$this->HDIVConfig->hasExcludedExtension($url) && !$this->HDIVConfig->isExcludedPage($url)) {
             $url = $this->dataComposerMemory->addUrlToCurrentPage($url);
         }
         

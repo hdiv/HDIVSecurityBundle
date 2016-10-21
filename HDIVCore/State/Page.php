@@ -28,7 +28,7 @@ class Page
 	{
 		$states = array();
 		$this->id = $id;
-		$this->randomToken = md5(uniqid(rand(), true));
+		$this->randomToken = strtoupper(md5(uniqid(rand(), true)));
 	}
 
 	public function getSize(){

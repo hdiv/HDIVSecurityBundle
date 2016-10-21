@@ -65,7 +65,7 @@ class DataValidator
 		}
 
         if (!$validation) {
-            $this->logger->error('Hdiv Security | INVALID_ACTION | Requested URL: '. $uri.' | IP: '.$_SERVER['REMOTE_ADDR']);
+            $this->logger->log('INVALID_ACTION', $uri, $_SERVER['REMOTE_ADDR'], null, null, null, null);
         }
 
 		return $validation;
@@ -100,9 +100,7 @@ class DataValidator
                         $valorUrl = $state->getUrl();
 
                         if ($valorUrl!=$_SERVER['REQUEST_URI']) {
-
-                            $this->logger->error('Hdiv Security | INVALID_ACTION | IP: '.$_SERVER['REMOTE_ADDR']);
-
+                            $this->logger->log('INVALID_ACTION', null, $_SERVER['REMOTE_ADDR'], null, null, null, null);
                             return False;
                         }
                         $sessionParameters =  $state->getParameters();
@@ -112,7 +110,7 @@ class DataValidator
                         $validation = $this->compareSessionParametersWithActualParameters($sessionParameters, $this->actualParameters);
 
                         if (!$validation) {
-                            $this->logger->error('Hdiv Security | INVALID_PARAMETER_VALUE | IP: '.$_SERVER['REMOTE_ADDR']);
+                            $this->logger->log('INVALID_PARAMETER_VALUE', null, $_SERVER['REMOTE_ADDR'], null, null, null, null);
                         }
 
                         return $validation;
@@ -120,8 +118,7 @@ class DataValidator
                 }
             }
         }
-
-        $this->logger->error('Hdiv Security | INVALID_ACTION | IP: '.$_SERVER['REMOTE_ADDR']);
+        $this->logger->log('INVALID_ACTION', null, $_SERVER['REMOTE_ADDR'], null, null, null, null);
         return False;
 
     }

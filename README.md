@@ -457,6 +457,23 @@ It is possible to configure this option from Hdiv configuration:
     <randomName>True</randomName>
 ```
 
+### 6.7 Logger
+
+Hdiv has a logger that will print in a file all the attacks detected, which helps system administrators checking the attacks the web application has suffered.
+Hdiv provides an example property file (hdivloggerconfig.properties) that has to be placed on App/Resources. If the file does not exist, a default logger will be use:
+
+```
+Hdiv Security;[type of attack];[url];[Ip];[fieldName];[fieldType];[fieldValue];[ruleName]
+```
+
+[type of attack]: Type of attack detected by Hdiv
+[url]: Url or action name the HTTP request was directed to.
+[IP]: IP address the request was made from.
+[fieldName]: Form field name.
+[fieldValue]: Form field value.
+[fieldType]: Form field type value.
+[ruleName]: Editable rule name.
+
 
 ## 7. References
 [1]. Gartner, Nov 2005

@@ -9,12 +9,17 @@ services:
             - @session
             - @hdiv_security_bundle.hdiv_config
 
+    hdiv_security_bundle.hdiv_logger:
+        class: HDIV\SecurityBundle\HDIVCore\Logger\HDIVLogger
+        arguments:
+            - [%kernel.root_dir%]            
+            - @logger
 
     hdiv_security_bundle.hdiv_data_validator:
         class: HDIV\SecurityBundle\HDIVCore\DataValidator\DataValidator
         arguments:
             - @session
-            - @logger
+            - @hdiv_security_bundle.hdiv_logger
 
     hdiv_security_bundle.hdiv_config:
         class: HDIV\SecurityBundle\HDIVCore\HDIVConfig
@@ -28,7 +33,7 @@ services:
         arguments:
             - @hdiv_security_bundle.hdiv_data_composer_memory
             - @hdiv_security_bundle.hdiv_config
-            - @logger
+            - @hdiv_security_bundle.hdiv_logger
         tags:
             - { name: form.type_extension, alias: form }
 
@@ -39,6 +44,6 @@ services:
             - @hdiv_security_bundle.hdiv_data_composer_memory
             - @hdiv_security_bundle.hdiv_config
             - @router
-            - @logger
+            - @hdiv_security_bundle.hdiv_logger
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest}

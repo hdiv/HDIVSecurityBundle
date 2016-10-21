@@ -26,9 +26,9 @@ class HDIVLogger
 		// Load user config
 		$array = array_values($path);
 
-		if (file_exists($array[0].'/Resources/hdivloggerconfig.properties’)) {
+		if (file_exists($array[0].'/Resources/hdivloggerconfig.properties')) {
 
-			$hdivLogger = file($array[0].'/Resources/hdivloggerconfig.properties);
+			$hdivLogger = file($array[0].'/Resources/hdivloggerconfig.properties');
 			$this->hdivLoggerFormatter = implode('', $hdivLogger);
 			
 		} else {

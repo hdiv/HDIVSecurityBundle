@@ -71,7 +71,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
         
                     // Log Errors
                     foreach($errors as $key => $value) {
-                        $logger->error('Hdiv Logger. Form validation | Field Name: '. $key.' | Field Type: '.$value.' | IP: '.$_SERVER['REMOTE_ADDR']);
+                        $logger->error('Hdiv Security | INVALID_PARAMETER_VALUE | Field Name: '. $key.' | Field Type: '.$value.' | IP: '.$_SERVER['REMOTE_ADDR']);
         
                     }
 
@@ -173,7 +173,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
                 if (!preg_match($acceptedPattern, $field->getData())) {
 
                     $field->addError(new FormError('HDIV Validation.'.$rule->getName().'. Invalid Characters.'));
-                    $logger->error('Hdiv Logger. Editable validation: '.$rule->getName().' | Field Name: '.$field->getName().' | Field Value: '.$field->getData().' | IP: '.$_SERVER['REMOTE_ADDR']);                    
+                    $logger->error('Hdiv Security | INVALID_EDITABLE_VALUE | Rule Name: '.$rule->getName().' | Field Name: '.$field->getName().' | Field Value: '.$field->getData().' | IP: '.$_SERVER['REMOTE_ADDR']);                    
                     return;
                 }
             }
@@ -183,7 +183,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
                 if (preg_match($rejectedPattern, $field->getData())) {
 
                     $field->addError(new FormError('HDIV Validation.'.$rule->getName().'. Invalid Characters.'));
-                    $logger->error('Hdiv Logger. Editable validation: '.$rule->getName().' | Field Name: '.$field->getName().' | Field Value: '.$field->getData().' | IP: '.$_SERVER['REMOTE_ADDR']);                    
+                    $logger->error('Hdiv Security | INVALID_EDITABLE_VALUE | Rule Name: '.$rule->getName().' | Field Name: '.$field->getName().' | Field Value: '.$field->getData().' | IP: '.$_SERVER['REMOTE_ADDR']);                    
                     return;
                 }
             }

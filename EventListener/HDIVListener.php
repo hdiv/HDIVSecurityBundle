@@ -105,7 +105,7 @@ class HDIVListener
 
             } else {
 
-                $this->logger->error('Hdiv Logger. Url validation | Requested URL: '. $transformedUri.' | IP: '.$_SERVER['REMOTE_ADDR']);
+                $this->logger->error('Hdiv Security | HDIV_PARAMETER_NOT_EXISTS | Requested URL: '. $transformedUri.' | IP: '.$_SERVER['REMOTE_ADDR']);
                 return false;
             }
         }

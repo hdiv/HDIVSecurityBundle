@@ -467,11 +467,17 @@ Hdiv Security;[type of attack];[url];[Ip];[fieldName];[fieldType];[fieldValue];[
 ```
 
 [type of attack]: Type of attack detected by Hdiv
+
 [url]: Url or action name the HTTP request was directed to.
+
 [IP]: IP address the request was made from.
+
 [fieldName]: Form field name.
+
 [fieldValue]: Form field value.
+
 [fieldType]: Form field type value.
+
 [ruleName]: Editable rule name.
 
 

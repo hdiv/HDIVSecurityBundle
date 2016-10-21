@@ -445,6 +445,19 @@ It is possible to configure this option from Hdiv configuration:
     <debugMode>False</debugMode>
 ```
 
+### 6.6 Random name
+
+_HDIV_STATE_ is the default name of the Hdiv parameter.
+
+There is a configuration option to enable the subtitution of the constant parameter name with a random name. In this case a per user random string is generated and used as the parameter name.
+
+It is possible to configure this option from Hdiv configuration:
+
+```
+    <randomName>True</randomName>
+```
+
+
 ## 7. References
 [1]. Gartner, Nov 2005
 

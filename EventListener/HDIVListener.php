@@ -45,18 +45,12 @@ class HDIVListener
         $request = $event->getRequest();
         $uri = str_replace('http://'.$_SERVER['HTTP_HOST'],'', $request->getRequestUri());
 
-        if ($this->HDIVConfig->isExcludedPage($uri)) {
-            return;
-        }
-
         if ($this->HDIVConfig->hasExcludedExtension($uri)) {
             return;
         }
 
         if ($this->HDIVConfig->isStartPage($uri)) {
-            if (!$this->HDIVConfig->isExcludedPage($uri)) {
-                $this->dataComposerMemory->addNewPage();
-            }
+            $this->dataComposerMemory->addNewPage();
             return;
         }
 

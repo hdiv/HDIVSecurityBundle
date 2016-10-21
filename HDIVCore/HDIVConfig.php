@@ -24,7 +24,6 @@ class HDIVConfig
 	private $isDebugModeEnabled;
 	private $maxPagesPerSession;
 	private $excludedExtensionsArray;
-	private $excludedPagesArray;
 	private $defaultBlackListRules;
 	private $userValidationRules;
 
@@ -102,14 +101,6 @@ class HDIVConfig
 			$this->excludedExtensionsArray[] = $excludedExtension->__toString();
 		}
 
-		//Gets from XML excludedPaths
-		foreach($xml->excludedPages->excludedPage as $child) {
-
-			$excludedPage = $this->transformPattern($child->__toString());
-			$this->excludedPagesArray[] = $excludedPage;
-		}
-
-
 		//Gets from XML maxPagesPerSession value
 		$this->maxPagesPerSession = $xml->maxPagesPerSession->__toString();
 
@@ -178,23 +169,6 @@ class HDIVConfig
 			}
 		}
 		return $isStartPage;
-	}
-
-	/**
-	 * Checks if <code>$uri</code> is an excluded URI.
-	 * @param $uri
-	 * @return bool
-	 */
-	public function isExcludedPage($uri) {
-
-		$isExcludedPage = FALSE;
-		foreach($this->excludedPagesArray as $excludedPage) {
-			if (preg_match($excludedPage, $uri)) {
-
-				$isExcludedPage = TRUE;
-			}
-		}
-		return $isExcludedPage;
 	}
 
 	/**

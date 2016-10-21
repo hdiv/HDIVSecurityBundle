@@ -73,7 +73,7 @@ class HDIVListener
      */
     public function validate($request, $transformedUri)
     {
-        $HDIVToken = $request->query->get('_HDIV_STATE_');
+        $HDIVToken = $request->query->get($this->HDIVConfig->getHdivStateName());
 
         if (isset($HDIVToken)) { //It's a GET URL.
 
@@ -87,7 +87,7 @@ class HDIVListener
 
                 $formName = array_shift($array);
                 $values = $request->request->get($formName);
-                $HDIVToken = $values['_HDIV_STATE_'];
+                $HDIVToken = $values[$this->HDIVConfig->getHdivStateName()];
                 $list = $request->request->all();
                 $formParameters = array_shift($list);
 

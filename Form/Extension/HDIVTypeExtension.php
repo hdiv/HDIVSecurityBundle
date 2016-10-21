@@ -41,16 +41,18 @@ class HDIVTypeExtension extends AbstractTypeExtension
      public function buildForm(FormBuilderInterface $builder, array $options)
      {
 
+        $HDIVConfig = $this->HDIVConfig;
+
         if ($options['compound']) {
 
             //Creates _HDIV_STATE_ hidden field to the form
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($builder) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($builder, $HDIVConfig) {
 
                 $form = $event->getForm();
-
+                $this->HDIVConfig;
                 if ($form->isRoot()) {
                     $factory = $builder->getFormFactory();
-                    $field = $factory->createNamed('_HDIV_STATE_', 'hidden', '', array('auto_initialize' => false, 'mapped'=>false));
+                    $field = $factory->createNamed($HDIVConfig->getHdivStateName(), 'hidden', '', array('auto_initialize' => false, 'mapped'=>false));
                     $form->add($field);
                 }
             });
@@ -62,7 +64,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
                     $logger = $this->logger;
 
                     //Checks text, textarea, search, email and password fields inputs
-                    $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($logger) {
+                    $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($logger, $HDIVConfig) {
         
                     // Gets Symfony's form errors
                     $errors =  $this->getErrorMessages($event->getForm());
@@ -74,7 +76,7 @@ class HDIVTypeExtension extends AbstractTypeExtension
                     }
 
                     //Get actionForm
-                    $formAction = $this->removeParam($event->getForm()->getConfig()->getAction(), '_HDIV_STATE_');
+                    $formAction = $this->removeParam($event->getForm()->getConfig()->getAction(), $HDIVConfig->getHdivStateName());
 
                     $editableValidationUrls = array_keys($this->HDIVConfig->getEditableValidations());
 
@@ -212,12 +214,12 @@ class HDIVTypeExtension extends AbstractTypeExtension
         if ($options['compound']) {
 
             //Store all form fields and set the _HDIV_STATE_ value to the hidden field.
-            $action = $this->removeParam($form->getConfig()->getAction(), '_HDIV_STATE_');
+            $action = $this->removeParam($form->getConfig()->getAction(), $this->HDIVConfig->getHdivStateName());
             $view->vars['action'] = $action;
             $token = $this->dataComposerMemory->addFormToCurrentPage($form, $action);
 
             if ($form->isRoot()) {
-                $view->children['_HDIV_STATE_']->vars['value'] = $token;
+                $view->children[$this->HDIVConfig->getHdivStateName()]->vars['value'] = $token;
             }
 
            // $this->toString($form);

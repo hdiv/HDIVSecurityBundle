@@ -28,12 +28,15 @@ class DataComposerMemory
 
 	private $stateCache;
 
+    private $HDIVConfig;
+
 	public function __construct($session, HDIVConfig $HDIVConfig)
 	{
 		$this->session = $session;
         $this->maxPagesPerSession= $HDIVConfig->getMaxPagesPerSession();
         $this->stateCache = $this->session->get('StateCache');
-
+        $this->HDIVConfig = $HDIVConfig;
+        
 		if (!isset($this->stateCache)) {
 			$this->stateCache = new StateCache();
 		}
@@ -75,9 +78,9 @@ class DataComposerMemory
 		$newState = new State($numPage, $actPage->getSize() + 1, $actPage->getRandomToken());
 
 		if (!strpos($url,'?')) {
-			$url .= '?_HDIV_STATE_='.$newState->getStateToken();
+			$url .= '?'.$this->HDIVConfig->getHdivStateName().'='.$newState->getStateToken();
 		} else {
-			$url .= '&_HDIV_STATE_='.$newState->getStateToken();
+			$url .= '&'.$this->HDIVConfig->getHdivStateName().'='.$newState->getStateToken();
 		}
 
 
@@ -134,7 +137,7 @@ class DataComposerMemory
                 $this->saveChildrenToState($ch, $newState,$name);
             } else {
 
-                if ($name==='form[_HDIV_STATE_]') {
+                if ($name==='form['.$this->HDIVConfig->getHdivStateName().']') {
                     $param = new Parameter($name, $type, $newState->getStateToken());
                 }else if (!$ch->getData()) {
                     $param = new Parameter($name, $type, '');

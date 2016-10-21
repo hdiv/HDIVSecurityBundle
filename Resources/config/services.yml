@@ -21,7 +21,8 @@ services:
         arguments:
             - [%kernel.root_dir%]
             - @file_locator
-
+            - @session            
+            
     hdiv_security_bundle.hdiv_type_extension:
         class: HDIV\SecurityBundle\Form\Extension\HDIVTypeExtension
         arguments:

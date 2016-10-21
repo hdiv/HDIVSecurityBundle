@@ -26,6 +26,8 @@ class HDIVConfig
 	private $excludedExtensionsArray;
 	private $defaultBlackListRules;
 	private $userValidationRules;
+	private $isRandomNameEnabled;
+	private $session;
 
 	/**
 	 * Array with URL pattern as key and array of validations as value to apply to that URL pattern
@@ -33,8 +35,9 @@ class HDIVConfig
 	private $editableValidations;
 
 
-	public function __construct($path, FileLocator $fileLocator) {
+	public function __construct($path, FileLocator $fileLocator, $session) {
 
+		$this->session = $session;
 		$this->loadBlackListRulesFromFile($fileLocator);
 
 		// Load user config
@@ -106,6 +109,9 @@ class HDIVConfig
 
 		//Gets debug mode value
 		$this->isDebugModeEnabled = $xml->debugMode->__toString();
+
+		//Gets random name value
+		$this->isRandomNameEnabled = $xml->randomName->__toString();
 	}
 
 	/**
@@ -219,6 +225,31 @@ class HDIVConfig
 			return TRUE;
 		} else {
 			return FALSE;
+		}
+	}
+
+	/**
+	 * Gets Hdiv State name
+	 * @param $uri
+	 * @return bool
+	 */
+	public function getHdivStateName(){
+
+		if ($this->isRandomNameEnabled=='True') {
+
+            $sessionRandomName = $this->session->get('hdiv-randomName');
+
+            if (strlen($sessionRandomName) == 0) {
+                $sessionRandomName = substr(strtoupper(md5(uniqid(rand(), true))), 0 , 5);
+                $this->session->set('hdiv-randomName',  $sessionRandomName, 0 , 5);
+             
+            } 
+
+            return $sessionRandomName;
+
+		} else {
+
+			return "_HDIV_STATE_";
 		}
 	}
 

@@ -330,14 +330,6 @@ hdiv:
     </excludedExtensions>
 
     <!--
-      Don't change if you are using wdt and profiler default paths
-       -->
-    <excludedPages>
-        <excludedPage>@^/hdiv-symfony-showcase/web/app_dev\.php/_profiler/@</excludedPage>
-        <excludedPage>@^/hdiv-symfony-showcase/web/app_dev\.php/_wdt/@</excludedPage>
-    </excludedPages>
-
-    <!--
     Editable validations
     HDIV offers a generic validation functionality that makes possible the application of validation
     rules to all editable data (information that comes from web forms fields such as text and password) sent by the client.

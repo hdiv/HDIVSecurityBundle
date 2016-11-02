@@ -32,11 +32,13 @@ class Router extends BaseRouter
 
     public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
     {
-        $url = parent::generate($name, $parameters, $referenceType);
-        $url = str_replace('http://'.$_SERVER['HTTP_HOST'],'',$url);
+        $urlParent = parent::generate($name, $parameters, $referenceType);
+        $url = str_replace('http://'.$_SERVER['HTTP_HOST'],'',$urlParent);
 
         if (!$this->HDIVConfig->isStartPage($url) && !$this->HDIVConfig->hasExcludedExtension($url)) {
             $url = $this->dataComposerMemory->addUrlToCurrentPage($url);
+        } else {
+            $url = $urlParent;
         }
         
         return $url;

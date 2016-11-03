@@ -458,6 +458,14 @@ Hdiv provides an example property file (hdivloggerconfig.properties) that has to
 Hdiv Security;[type of attack];[url];[Ip];[fieldName];[fieldType];[fieldValue];[ruleName]
 ```
 
+### 6.8 Disable Hdiv
+
+In order to disable Hdiv, it is possible to configure this option from Hdiv configuration:
+
+```
+    <hdivEnabled>False</hdivEnabled>
+```
+
 [type of attack]: Type of attack detected by Hdiv
 
 [url]: Url or action name the HTTP request was directed to.

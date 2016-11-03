@@ -27,6 +27,7 @@ class HDIVConfig
 	private $defaultBlackListRules;
 	private $userValidationRules;
 	private $isRandomNameEnabled;
+	private $isHdivEnabled;
 	private $session;
 
 	/**
@@ -109,6 +110,9 @@ class HDIVConfig
 
 		//Gets debug mode value
 		$this->isDebugModeEnabled = $xml->debugMode->__toString();
+
+		//Gets hdiv enabled value
+		$this->isHdivEnabled = $xml->hdivEnabled->__toString();
 
 		//Gets random name value
 		$this->isRandomNameEnabled = $xml->randomName->__toString();
@@ -222,6 +226,20 @@ class HDIVConfig
 	public function isDebugModeEnabled(){
 
 		if ($this->isDebugModeEnabled=='True') {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	/**
+	 * Checks if hdiv is enabled
+	 * @param $uri
+	 * @return bool
+	 */
+	public function isHdivEnabled(){
+
+		if ($this->isHdivEnabled=='True') {
 			return TRUE;
 		} else {
 			return FALSE;

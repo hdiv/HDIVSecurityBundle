@@ -42,6 +42,11 @@ class HDIVListener
 
  	public function onKernelRequest(GetResponseEvent $event)
     {
+
+        if (!$this->HDIVConfig->isHdivEnabled()) {
+            return;
+        }
+        
         $request = $event->getRequest();
         $uri = str_replace('http://'.$_SERVER['HTTP_HOST'],'', $request->getRequestUri());
 

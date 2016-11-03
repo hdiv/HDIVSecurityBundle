@@ -43,6 +43,10 @@ class HDIVTypeExtension extends AbstractTypeExtension
 
         $HDIVConfig = $this->HDIVConfig;
 
+        if (!$this->HDIVConfig->isHdivEnabled()) {
+            return;
+        }
+
         if ($options['compound']) {
 
             //Creates _HDIV_STATE_ hidden field to the form
@@ -210,6 +214,11 @@ class HDIVTypeExtension extends AbstractTypeExtension
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
+        
+        if (!$this->HDIVConfig->isHdivEnabled()) {
+            return;
+        }
+
         if ($options['compound']) {
 
             //Store all form fields and set the _HDIV_STATE_ value to the hidden field.

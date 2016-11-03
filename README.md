@@ -301,6 +301,8 @@ hdiv:
 <?xml version="1.0" encoding="UTF-8"?>
 <hdiv-config>
 
+	<hdivEnabled>True</hdivEnabled>
+
     <startPages>
 
         <!--
@@ -458,14 +460,6 @@ Hdiv provides an example property file (hdivloggerconfig.properties) that has to
 Hdiv Security;[type of attack];[url];[Ip];[fieldName];[fieldType];[fieldValue];[ruleName]
 ```
 
-### 6.8 Disable Hdiv
-
-In order to disable Hdiv, it is possible to configure this option from Hdiv configuration:
-
-```
-    <hdivEnabled>False</hdivEnabled>
-```
-
 [type of attack]: Type of attack detected by Hdiv
 
 [url]: Url or action name the HTTP request was directed to.
@@ -479,6 +473,14 @@ In order to disable Hdiv, it is possible to configure this option from Hdiv conf
 [fieldType]: Form field type value.
 
 [ruleName]: Editable rule name.
+
+### 6.8 Disable Hdiv
+
+In order to disable Hdiv, it is possible to configure this option from Hdiv configuration:
+
+```
+    <hdivEnabled>False</hdivEnabled>
+```
 
 
 ## 7. References

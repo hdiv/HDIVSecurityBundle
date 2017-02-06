@@ -483,6 +483,19 @@ In order to disable Hdiv, it is possible to configure this option from Hdiv conf
 ```
 
 
+### 6.9 StartParameters
+
+By default the Hdiv listener does not allow any request parameter that has not been registered previously by Hdiv. In some cases parameters are not created on the server side or they have a random value, in which case they are incorporated as parameter names for which Hdiv makes no kind of validation.
+
+The following shows the configuration code to define a start parameter:
+
+```
+    <startParameters>
+        <startParameter>param1</startParameter>
+    </startParameters>
+```
+
+
 ## 7. References
 [1]. Gartner, Nov 2005
 

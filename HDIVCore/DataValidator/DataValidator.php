@@ -176,7 +176,7 @@ class DataValidator
                     }
                 }
 
-                if($val==False && !$this->HDIVConfig->isStartParameter($keyActual)) {
+                if($val==False && !$this->hdivConfig->isStartParameter($keyActual)) {
                     return False;
                 }
             }

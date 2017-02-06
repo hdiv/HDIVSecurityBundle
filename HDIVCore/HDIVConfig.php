@@ -20,6 +20,7 @@ class HDIVConfig
 {
 
 	private $startPagesArray;
+	private $startParemetersArray;
 	private $isEditableValidationEnabled;
 	private $isDebugModeEnabled;
 	private $maxPagesPerSession;
@@ -97,6 +98,14 @@ class HDIVConfig
 
 			$startPage = $this->transformPattern($child->__toString());
 			$this->startPagesArray[] = $startPage;
+		}
+
+		//Gets from XML startParameters
+		$startParemetersArray = array();
+		foreach($xml->startParameters->startParameter as $child) {
+
+			$startParameter = $this->transformPattern($child->__toString());
+			$this->startParemetersArray[] = $startParameter;
 		}
 
 		//Gets from XML excludedExtensions
@@ -182,6 +191,24 @@ class HDIVConfig
 	}
 
 	/**
+	 * Checks if <code>$parameter</code> is a startParemeter, in which case it will not be treated by HDIV.
+	 * @param $parameter
+	 * @return bool
+	 */
+	public function isStartParameter($parameter) {
+
+		$isStartParameter = FALSE;
+		foreach($this->startParemetersArray as $startParameter) {
+			if (preg_match($startParameter,$parameter)) {
+
+				$isStartParameter = TRUE;
+			}
+		}
+		return $isStartParameter;
+	}
+
+
+	/**
 	 * Get StartPages
 	 * @param $uri
 	 * @return bool
@@ -190,6 +217,15 @@ class HDIVConfig
 		return $this->startPagesArray;
 	}
 
+
+	/**
+	 * Get StartParameters
+	 * @param $uri
+	 * @return bool
+	 */
+	public function getStartParametersArray(){
+		return $this->startParemetersArray;
+	}
 
 	/**
 	 * Gets default validation rules

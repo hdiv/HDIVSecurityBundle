@@ -22,11 +22,13 @@ class DataValidator
 	private $session;
     private $actualParameters;
     private $logger;
+    private $hdivConfig;
 
-	public function __construct($session, $logger)
+	public function __construct($session, $logger, $hdivConfig)
 	{
 		$this->session = $session;
         $this->logger = $logger;
+        $this->hdivConfig = $hdivConfig;
 
     }
 
@@ -174,11 +176,12 @@ class DataValidator
                     }
                 }
 
-                if($val==False) {
+                if($val==False && !$this->HDIVConfig->isStartParameter($keyActual)) {
                     return False;
                 }
             }
             return True;
         }
     }
+
 }

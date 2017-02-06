@@ -20,6 +20,7 @@ services:
         arguments:
             - @session
             - @hdiv_security_bundle.hdiv_logger
+            - @hdiv_security_bundle.hdiv_config
 
     hdiv_security_bundle.hdiv_config:
         class: HDIV\SecurityBundle\HDIVCore\HDIVConfig

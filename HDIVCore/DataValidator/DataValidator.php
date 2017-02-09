@@ -156,11 +156,7 @@ class DataValidator
      */
     public function compareSessionParametersWithActualParameters($sessionArray, $actualParameters) {
 
-        if (count($sessionArray) < count($actualParameters)) {
-            return False;
-        } else {
-
-            foreach ($actualParameters as $keyActual => $valueActual) {
+        foreach ($actualParameters as $keyActual => $valueActual) {
                $val = False;
                 foreach ($sessionArray as $keySession => $valueSession) {
                     if($keyActual===$keySession) {
@@ -182,6 +178,4 @@ class DataValidator
             }
             return True;
         }
-    }
-
 }

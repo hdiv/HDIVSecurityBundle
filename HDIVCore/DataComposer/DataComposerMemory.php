@@ -72,6 +72,11 @@ class DataComposerMemory
 	{
         $this->stateCache = $this->session->get('StateCache');
 
+        if (is_null($this->stateCache)) {
+            $this->stateCache = new StateCache();
+            $this->addNewPage();
+        }
+
 		$numPage = $this->stateCache->getLast();
 		$actPage = $this->session->get('Page '.$numPage);
 
@@ -104,6 +109,12 @@ class DataComposerMemory
      */
     public function addFormToCurrentPage($form, $newAction)
     {
+
+        if (is_null($this->session->get('StateCache'))) {
+            $this->stateCache = new StateCache();
+            $this->addNewPage();
+        }
+
         $numPage = $this->session->get('StateCache')->getLast();
         $actPage = $this->session->get('Page '.$numPage);
 

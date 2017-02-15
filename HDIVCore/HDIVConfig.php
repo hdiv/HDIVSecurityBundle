@@ -100,12 +100,16 @@ class HDIVConfig
 			$this->startPagesArray[] = $startPage;
 		}
 
-		//Gets from XML startParameters
-		$startParemetersArray = array();
-		foreach($xml->startParameters->startParameter as $child) {
 
-			$startParameter = $this->transformPattern($child->__toString());
-			$this->startParemetersArray[] = $startParameter;
+		if (!empty($xml->startParameters)) {		
+			//Gets from XML startParameters
+			$startParemetersArray = array();
+			
+			foreach($xml->startParameters->startParameter as $child) {
+
+				$startParameter = $this->transformPattern($child->__toString());
+				$this->startParemetersArray[] = $startParameter;
+			}
 		}
 
 		//Gets from XML excludedExtensions

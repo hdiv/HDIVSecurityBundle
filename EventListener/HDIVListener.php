@@ -55,7 +55,6 @@ class HDIVListener
         }
 
         if ($this->HDIVConfig->isStartPage($uri)) {
-            $this->dataComposerMemory->addNewPage();
             return;
         }
 
